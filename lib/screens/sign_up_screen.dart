@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pick_my_parcel_customer/constants/constants.dart';
 import '../util/primary_button.dart';
 
@@ -20,7 +21,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailController = TextEditingController();
 
   Future<void> sendOtp1(BuildContext context, String number) async {
-    String phone = "+91" + number.trim();
+    String phone = "+91" + number.substring(number.length - 10);
+    Fluttertoast.showToast(
+        msg: "OTP sent to ${number.trim()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0);
+    log(phone);
 
     await FirebaseAuth.instance.verifyPhoneNumber(
       phoneNumber: phone,
@@ -36,7 +46,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'uid': FirebaseAuth.instance.currentUser?.uid
         });
       },
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      codeAutoRetrievalTimeout: (String verificationId) {
+        log(verificationId);
+      },
     );
   }
 

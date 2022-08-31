@@ -80,8 +80,7 @@ class _PlaceOrderDetailsState extends State<PlaceOrderDetails> {
     final data = json.decode(response.body);
     if (data["status"] != "ZERO_RESULTS") {
       setState(() {
-        pickupcityname =
-            data["results"][0]["address_components"][1]["long_name"];
+        pickupcityname = data["results"][0]["postcode_localities"][1];
       });
     } else {
       setState(() {
@@ -98,8 +97,7 @@ class _PlaceOrderDetailsState extends State<PlaceOrderDetails> {
     final data = json.decode(response.body);
     if (data["status"] != "ZERO_RESULTS") {
       setState(() {
-        deliverycityname =
-            data["results"][0]["address_components"][1]["long_name"];
+        deliverycityname = data["results"][0]["postcode_localities"][1];
       });
     } else {
       setState(() {
